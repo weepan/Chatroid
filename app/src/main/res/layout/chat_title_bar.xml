@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- custom_titlebar.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/settingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_setting_option"
+        android:padding="8dp"
+        android:background="@drawable/imagebutton_background"/>
+    <TextView
+        android:id="@+id/tv_title"
+        android:gravity="left|center_vertical"
+        android:text="@string/chat_title"
+        android:padding="8dp"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"/>
+    <ImageButton
+        android:id="@+id/cleanButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_clean"
+        android:padding="8dp"
+        android:background="@drawable/imagebutton_background" />
+
+    <!-- 其他视图 -->
+
+</LinearLayout>

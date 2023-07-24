@@ -1,0 +1,5 @@
+<!-- message_received_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#EAEAEA" />
+    <corners android:radius="8dp" />
+</shape>
