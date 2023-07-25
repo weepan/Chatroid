@@ -1,5 +1,6 @@
 <p align="center">
   <img width="180" src="./icons/logo.png" alt="ChatGPT">
+  <img width="180" src="./icons/applogo.png" alt="Chatroid">
   <h1 align="center">ChatGPT</h1>
   <p align="center">ChatGPT Android Application </p>
 </p>
@@ -14,10 +15,10 @@
 
 How to use it
 1) You shall get a key for chatapi from https://platform.openai.com/account/api-keys
-<img width="180" src="./icons/img.png" alt="ChatGPT">
+<img width="640" src="./icons/img.png" alt="ChatGPT">
 2) Set the key in the App setting UI 
-<img  src="./icons/setting.jpg" alt="Setting">
+<img width="180" src="./icons/setting.jpg" alt="Setting">
 3) Start to enjoy AI chat.
-<img  src="./icons/chat.jpg" alt="Chat">
+<img width="180" src="./icons/chat.jpg" alt="Chat">
 
 
