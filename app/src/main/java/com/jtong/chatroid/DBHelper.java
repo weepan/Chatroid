@@ -16,12 +16,16 @@ public class DBHelper extends SQLiteOpenHelper {
         //创建数据库sql语句并执行
         String sql="create table setting(id INTEGER PRIMARY KEY,apikey varchar(256),server varchar(256))";
         db.execSQL(sql);
+        sql="create table messages(topic varchar(256) PRIMARY KEY,json text)";
+        db.execSQL(sql);
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String sql="drop table IF EXISTS setting";
+        db.execSQL(sql);
+        sql="drop table IF EXISTS messages";
         db.execSQL(sql);
         onCreate(db);
     }

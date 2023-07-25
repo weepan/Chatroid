@@ -82,15 +82,16 @@ public class Chatgpt {
 
     }
 
-    public void completion(List<Message> messages) {
+    public void completion(String system,List<Message> messages) {
         CompletionRequest completionRequest = new CompletionRequest();
         //发送最近的10条聊天记录
         int chatlen = Math.min(10,messages.size());
-        ChatMessage[] msgs = new ChatMessage[chatlen];
+        ChatMessage[] msgs = new ChatMessage[chatlen+1];
         for(int i=0;i<chatlen;i++){
             Message msg = messages.get(messages.size()-i-1);
-            msgs[chatlen-i-1] = new ChatMessage(msg.isSentByUser()?"user":"assistant",msg.getContent());
+            msgs[chatlen-i] = new ChatMessage(msg.isSentByUser()?"user":"assistant",msg.getContent());
         }
+        msgs[0] = new ChatMessage("system",system);
         completionRequest.setMessages(msgs);
         String reqJson = moshi.adapter(CompletionRequest.class).toJson(completionRequest);
 

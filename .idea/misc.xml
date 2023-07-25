@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/dev/android/Chatroid/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.175" />
+        <entry key="..\:/dev/android/Chatroid/app/src/main/res/drawable/avatar.xml" value="0.1" />
+        <entry key="..\:/dev/android/Chatroid/app/src/main/res/drawable/avatar_placeholder.xml" value="0.1" />
         <entry key="..\:/dev/android/Chatroid/app/src/main/res/drawable/edittext_background.xml" value="0.1195" />
         <entry key="..\:/dev/android/Chatroid/app/src/main/res/drawable/ic_back.xml" value="0.1" />
         <entry key="..\:/dev/android/Chatroid/app/src/main/res/drawable/ic_clean.xml" value="0.1" />
@@ -17,11 +19,15 @@
         <entry key="..\:/dev/android/Chatroid/app/src/main/res/layout/activity_chat.xml" value="0.109375" />
         <entry key="..\:/dev/android/Chatroid/app/src/main/res/layout/activity_config.xml" value="0.13177083333333334" />
         <entry key="..\:/dev/android/Chatroid/app/src/main/res/layout/activity_main.xml" value="0.23489583333333333" />
+        <entry key="..\:/dev/android/Chatroid/app/src/main/res/layout/activity_topic.xml" value="0.10416666666666667" />
         <entry key="..\:/dev/android/Chatroid/app/src/main/res/layout/chat_title_bar.xml" value="0.2" />
         <entry key="..\:/dev/android/Chatroid/app/src/main/res/layout/config_title_bar.xml" value="0.109375" />
         <entry key="..\:/dev/android/Chatroid/app/src/main/res/layout/content_main.xml" value="0.109375" />
         <entry key="..\:/dev/android/Chatroid/app/src/main/res/layout/fragment_first.xml" value="0.109375" />
+        <entry key="..\:/dev/android/Chatroid/app/src/main/res/layout/item_chat_topic.xml" value="0.103125" />
         <entry key="..\:/dev/android/Chatroid/app/src/main/res/layout/item_message.xml" value="0.24947916666666667" />
+        <entry key="..\:/dev/android/Chatroid/app/src/main/res/layout/topic_title_bar.xml" value="0.10416666666666667" />
+        <entry key="..\:/dev/android/Chatroid/app/src/main/res/menu/delete_menu.xml" value="0.20677083333333332" />
         <entry key="..\:/dev/android/Chatroid/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1205" />
         <entry key="..\:/dev/android/Chatroid/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1205" />
       </map>
