@@ -8,7 +8,7 @@
 
 ---
 
-**This is an unofficial project solely intended for personal learning and research. It isn't completed so far. But it works well. You just need get chatgpt API Key, and replace the API_KEY in Chatgpt.java **
+**This is an unofficial project solely intended for personal learning and research. It works well. You just need get chatgpt API Key, and set the key in setting UI **
 
 - **Some individuals have repackaged and sold it for profit.**
 - **The name and icon of ChatGPT could potentially lead to infringement disputes.**
