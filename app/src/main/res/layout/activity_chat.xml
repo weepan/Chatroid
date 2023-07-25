@@ -11,9 +11,11 @@
         android:layout_height="match_parent"
         android:padding="10dp"
         android:clipToPadding="false"
-        android:background="#F5F5F5" />
+        android:background="#F5F5F5"
+        android:layout_above="@id/linearLayout" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

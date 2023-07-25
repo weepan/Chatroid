@@ -1,5 +1,6 @@
 package com.jtong.chatroid;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,6 +20,7 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private EditText inputEditText;
     private Button sendButton;
+    private ImageButton settingButton;
     private ImageButton cleanButton;
     private List<Message> messageList;
     private MessageAdapter messageAdapter;
@@ -36,6 +38,7 @@ public class ChatActivity extends AppCompatActivity {
         inputEditText = findViewById(R.id.inputEditText);
         sendButton = findViewById(R.id.sendButton);
         cleanButton = findViewById(R.id.cleanButton);
+        settingButton =findViewById(R.id.settingButton);
 
         messageList = new ArrayList<>();
         messageAdapter = new MessageAdapter(messageList);
@@ -89,6 +92,16 @@ public class ChatActivity extends AppCompatActivity {
                         messageAdapter.notifyDataSetChanged();
                     }
                 });
+        settingButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(ChatActivity.this,
+                                ConfigActivity.class);
+                        startActivity(intent);
+                    }
+                }
+        );
 
     }
 }

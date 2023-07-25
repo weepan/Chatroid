@@ -17,7 +17,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Chatgpt {
-    private final static String API_KEY = "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";
+    private static String API_KEY;
     private final static MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json");
 
     public void setOnResponseListener(OnResponseListener onResponseListener) {
@@ -84,12 +84,19 @@ public class Chatgpt {
 
     public void completion(List<Message> messages) {
         CompletionRequest completionRequest = new CompletionRequest();
-        Message lastMsg = messages.get(messages.size()-1);
-        ChatMessage[] msgs = new ChatMessage[]{new ChatMessage(lastMsg.isSentByUser()?"user":"assistant",lastMsg.getContent())};
+        //发送最近的10条聊天记录
+        int chatlen = Math.min(10,messages.size());
+        ChatMessage[] msgs = new ChatMessage[chatlen];
+        for(int i=0;i<chatlen;i++){
+            Message msg = messages.get(messages.size()-i-1);
+            msgs[chatlen-i-1] = new ChatMessage(msg.isSentByUser()?"user":"assistant",msg.getContent());
+        }
         completionRequest.setMessages(msgs);
         String reqJson = moshi.adapter(CompletionRequest.class).toJson(completionRequest);
-        String url = "https://api.openai.com/v1/chat/completions";
-        String apiKey = "Bearer "+API_KEY;
+
+        //String url = "https://api.openai.com/v1/chat/completions";
+        String url = ChatroidApp.getGlobalConfig().server;
+        String apiKey = "Bearer "+ChatroidApp.getGlobalConfig().api_key;
         RequestBody body = RequestBody.create(reqJson,MediaType.parse("application/json"));
         Request request = new Request.Builder().url(url)
                 .header("Authorization", apiKey)
