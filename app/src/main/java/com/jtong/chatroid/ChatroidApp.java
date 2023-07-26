@@ -22,7 +22,7 @@ public class ChatroidApp extends Application {
         super.onCreate();
 
         // 初始化数据库
-        DBHelper databaseHelper = new DBHelper(this, "setting.db", null, 1);
+        DBHelper databaseHelper = new DBHelper(this, "setting.db", null, 2);
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         //创建游标对象
         Cursor cursor = db.query("setting", new String[]{"id","apikey","server"}, "id=?",

@@ -18,6 +18,14 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(sql);
         sql="create table messages(topic varchar(256) PRIMARY KEY,json text)";
         db.execSQL(sql);
+        sql="create table topics(topic varchar(256) PRIMARY KEY)";
+        db.execSQL(sql);
+        sql="insert into topics(topic) values('翻译')";
+        db.execSQL(sql);
+        sql="insert into topics(topic) values('编程')";
+        db.execSQL(sql);
+        sql="insert into topics(topic) values('聊天')";
+        db.execSQL(sql);
 
     }
 
@@ -26,6 +34,8 @@ public class DBHelper extends SQLiteOpenHelper {
         String sql="drop table IF EXISTS setting";
         db.execSQL(sql);
         sql="drop table IF EXISTS messages";
+        db.execSQL(sql);
+        sql="drop table IF EXISTS topics";
         db.execSQL(sql);
         onCreate(db);
     }

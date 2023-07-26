@@ -45,7 +45,7 @@ public class ConfigActivity extends AppCompatActivity {
     }
 
     private void saveConfigToDatabase(String key, String server) {
-        DBHelper mdbHelper = new DBHelper(ConfigActivity.this, "setting.db", null, 1);
+        DBHelper mdbHelper = new DBHelper(ConfigActivity.this, "setting.db", null, 2);
         SQLiteDatabase db = mdbHelper.getWritableDatabase();
         //创建存放数据的ContentValues对象
         ContentValues values = new ContentValues();

@@ -100,10 +100,14 @@ public class ChatActivity extends AppCompatActivity {
                     messageList.add(message);
                     messageAdapter.notifyDataSetChanged();
                     recyclerView.scrollToPosition(messageList.size() - 1);
-                    chatgpt.completion(system,messageList);
+                    if(TextUtils.isEmpty(ChatroidApp.getGlobalConfig().api_key)){
+                        Toast.makeText(ChatActivity.this, "Please set the API KEY", Toast.LENGTH_LONG).show();
+                    }else {
+                        chatgpt.completion(system, messageList);
 
-                    // 清空输入框
-                    inputEditText.setText("");
+                        // 清空输入框
+                        inputEditText.setText("");
+                    }
                 }
             }
         });
@@ -136,7 +140,7 @@ public class ChatActivity extends AppCompatActivity {
         Messages msgs = new Messages();
         msgs.data = messageList;
         String msgsJson = moshi.adapter(Messages.class).toJson(msgs);
-        DBHelper mdbHelper = new DBHelper(ChatActivity.this, "setting.db", null, 1);
+        DBHelper mdbHelper = new DBHelper(ChatActivity.this, "setting.db", null, 2);
         SQLiteDatabase db = mdbHelper.getWritableDatabase();
         //创建存放数据的ContentValues对象
         ContentValues values = new ContentValues();
@@ -159,7 +163,7 @@ public class ChatActivity extends AppCompatActivity {
         String msgsJson=null;
 
         // 初始化数据库
-        DBHelper databaseHelper = new DBHelper(this, "setting.db", null, 1);
+        DBHelper databaseHelper = new DBHelper(this, "setting.db", null, 2);
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         //创建游标对象
         Cursor cursor = db.query("messages", new String[]{"topic","json"}, "topic=?",

@@ -2,6 +2,7 @@ package com.jtong.chatroid;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,11 +19,11 @@ import java.util.List;
 
 public class ChatTopicAdapter extends RecyclerView.Adapter<ChatTopicAdapter.ChatTopicViewHolder> {
 
-    private List<ChatTopic> chatTopics;
+    private List<ChatTopic> topicList;
     private Context context;
 
     public ChatTopicAdapter(Context context,List<ChatTopic> chatTopics) {
-        this.chatTopics = chatTopics;
+        this.topicList = chatTopics;
         this.context = context;
     }
 
@@ -35,20 +36,34 @@ public class ChatTopicAdapter extends RecyclerView.Adapter<ChatTopicAdapter.Chat
 
     @Override
     public void onBindViewHolder(@NonNull ChatTopicViewHolder holder, int position) {
-        ChatTopic chatTopic = chatTopics.get(position);
+        ChatTopic chatTopic = topicList.get(position);
         holder.nameTextView.setText(chatTopic.getTopic());
         // 设置头像等其他数据
     }
 
     @Override
     public int getItemCount() {
-        return chatTopics.size();
+        return topicList.size();
+    }
+
+    public void deleteTopicInDatabase(ChatTopic topic){
+
+        DBHelper mdbHelper = new DBHelper(context, "setting.db", null, 2);
+        SQLiteDatabase db = mdbHelper.getWritableDatabase();
+        //创建存放数据的ContentValues对象
+        //删除
+        db.delete("topics", "topic=?", new String[]{topic.getTopic()});
+
+        //删除
+        db.delete("messages", "topic=?", new String[]{topic.getTopic()});
+
     }
 
     public void deleteItem(int position) {
         // 执行删除逻辑
-        // ...
-        chatTopics.remove(position);
+        // 数据库删除
+        deleteTopicInDatabase(topicList.get(position));
+        topicList.remove(position);
         // 更新 RecyclerView
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, getItemCount());

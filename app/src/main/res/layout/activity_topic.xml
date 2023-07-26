@@ -12,6 +12,36 @@
         android:padding="10dp"
         android:clipToPadding="false"
         android:background="#F5F5F5"
-         />
+        android:layout_above="@id/linearLayout" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp"
+        android:background="#FFFFFF">
+
+        <EditText
+            android:id="@+id/inputEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Type a topic..."
+            android:padding="8dp"
+            android:background="@drawable/edittext_background"
+            android:textColor="#000000" />
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Add"
+            android:background="@drawable/sendbutton_background"
+            android:textColor="#FFFFFF"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

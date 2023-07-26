@@ -15,20 +15,13 @@
     <TextView
         android:id="@+id/tv_title"
         android:gravity="left|center_vertical"
-        android:text="@string/chat_title"
+        android:text="@string/topic_title"
         android:padding="8dp"
         android:layout_weight="1"
         android:layout_width="wrap_content"
         android:textSize="18dp"
         android:textStyle="bold"
         android:layout_height="wrap_content"/>
-    <ImageButton
-        android:id="@+id/addButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_add"
-        android:padding="8dp"
-        android:background="@drawable/imagebutton_background"/>
     <!-- 其他视图 -->
 
 </LinearLayout>
