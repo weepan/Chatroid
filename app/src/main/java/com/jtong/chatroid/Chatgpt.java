@@ -36,7 +36,7 @@ public class Chatgpt {
     }
 
     private final OkHttpClient okHttpClient = new OkHttpClient.Builder().
-            connectTimeout(2, TimeUnit.SECONDS).
+            connectTimeout(10, TimeUnit.SECONDS).
             writeTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS).
             callTimeout(120, TimeUnit.SECONDS).

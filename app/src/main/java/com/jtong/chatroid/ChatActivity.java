@@ -39,19 +39,21 @@ public class ChatActivity extends AppCompatActivity {
     private final Moshi moshi = new Moshi.Builder().build();
 
     private void moveToLastMessage(){
+
         recyclerView.post(new Runnable() {
             @Override
             public void run() {
-                // 滚动到最后一行的底部
-                View targetView = layoutManager.findViewByPosition(messageAdapter.getItemCount()-1);
-
-                // 滚动到底部
-                if (targetView != null) {
-                    int bottom = targetView.getBottom();
-                    recyclerView.scrollBy(0, bottom);
-                }else{
-                    recyclerView.scrollToPosition(messageAdapter.getItemCount()-1);
-                }
+                recyclerView.scrollBy(0, Integer.MAX_VALUE);
+//                // 滚动到最后一行的底部
+//                View targetView = layoutManager.findViewByPosition(messageAdapter.getItemCount()-1);
+//
+//                // 滚动到底部
+//                if (targetView != null) {
+//                    int bottom = targetView.getBottom();
+//                    recyclerView.scrollBy(0, bottom);
+//                }else{
+//                    recyclerView.scrollToPosition(messageAdapter.getItemCount()-1);
+//                }
             }
         });
 
