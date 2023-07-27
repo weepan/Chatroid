@@ -12,7 +12,8 @@
         android:padding="10dp"
         android:clipToPadding="false"
         android:background="#F5F5F5"
-        android:layout_above="@id/linearLayout" />
+        android:layout_above="@id/linearLayout"
+        />
 
     <LinearLayout
         android:id="@+id/linearLayout"

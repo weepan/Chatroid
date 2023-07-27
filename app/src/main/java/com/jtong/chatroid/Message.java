@@ -1,7 +1,7 @@
 package com.jtong.chatroid;
 
 public class Message {
-    private final String content;
+    private String content;
     private final long timestamp;
     private final boolean isSentByUser;
 
@@ -13,6 +13,10 @@ public class Message {
 
     public String getContent() {
         return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public long getTimestamp() {

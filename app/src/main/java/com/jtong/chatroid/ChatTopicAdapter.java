@@ -79,7 +79,7 @@ public class ChatTopicAdapter extends RecyclerView.Adapter<ChatTopicAdapter.Chat
             nameTextView = itemView.findViewById(R.id.nameTextView);
 
             // 注册长按事件监听器
-            nameTextView.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
@@ -93,7 +93,7 @@ public class ChatTopicAdapter extends RecyclerView.Adapter<ChatTopicAdapter.Chat
                 }
             } );
 
-            nameTextView.setOnLongClickListener(new View.OnLongClickListener() {
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     int position = getAdapterPosition();

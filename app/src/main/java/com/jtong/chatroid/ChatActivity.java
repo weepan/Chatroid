@@ -34,8 +34,31 @@ public class ChatActivity extends AppCompatActivity {
     private MessageAdapter messageAdapter;
     private Chatgpt chatgpt;
     private String system;
+    private LinearLayoutManager layoutManager;
 
     private final Moshi moshi = new Moshi.Builder().build();
+
+    private void moveToLastMessage(){
+        recyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                // 滚动到最后一行的底部
+                View targetView = layoutManager.findViewByPosition(messageAdapter.getItemCount()-1);
+
+                // 滚动到底部
+                if (targetView != null) {
+                    int bottom = targetView.getBottom();
+                    recyclerView.scrollBy(0, bottom);
+                }else{
+                    recyclerView.scrollToPosition(messageAdapter.getItemCount()-1);
+                }
+            }
+        });
+
+
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,20 +89,27 @@ public class ChatActivity extends AppCompatActivity {
             Log.e("ChatActivity",e.toString());
         }
         messageAdapter = new MessageAdapter(messageList);
+
         chatgpt = new Chatgpt();
         chatgpt.setOnResponseListener(new Chatgpt.OnResponseListener() {
             @Override
-            public void OnResponse(String response) {
+            public void OnResponse(String response,int status) {
                 // 创建消息对象并添加到消息列表
-                Message message = new Message(response, System.currentTimeMillis(), false);
-                messageList.add(message);
+                Message message;
+                if (status==0){
+                    message = new Message(response, System.currentTimeMillis(), false);
+                    messageList.add(message);
+                }else if(status==1){
+                    message = messageList.get(messageList.size()-1);
+                    message.setContent(message.getContent()+response);
+                }
                 runOnUiThread(new Runnable(){
 
                     @Override
                     public void run() {
                         //更新UI
                         messageAdapter.notifyDataSetChanged();
-                        recyclerView.scrollToPosition(messageList.size() - 1);
+                        moveToLastMessage();
                     }
 
                 });
@@ -89,11 +119,20 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void OnFailure(String response) {
-                Toast.makeText(ChatActivity.this,response,Toast.LENGTH_LONG).show();
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        Toast.makeText(ChatActivity.this, response, Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(messageAdapter);
+
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +143,7 @@ public class ChatActivity extends AppCompatActivity {
                     Message message = new Message(messageText, System.currentTimeMillis(), true);
                     messageList.add(message);
                     messageAdapter.notifyDataSetChanged();
-                    recyclerView.scrollToPosition(messageList.size() - 1);
+                    moveToLastMessage();
                     if(TextUtils.isEmpty(ChatroidApp.getGlobalConfig().api_key)){
                         Toast.makeText(ChatActivity.this, "Please set the API KEY", Toast.LENGTH_LONG).show();
                     }else {
@@ -129,12 +168,18 @@ public class ChatActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 在此处将聊天记录保存到数据库
-                saveMessageToDatabase(messageList);
                 finish();
             }
         });
+        moveToLastMessage();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        // 在此处将聊天记录保存到数据库
+        saveMessageToDatabase(messageList);
+        super.onDestroy();
     }
 
     private static class Messages{

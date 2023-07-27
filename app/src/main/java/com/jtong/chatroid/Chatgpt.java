@@ -1,10 +1,13 @@
 package com.jtong.chatroid;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.squareup.moshi.Moshi;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -28,7 +31,7 @@ public class Chatgpt {
 
 
     public interface OnResponseListener {
-        void OnResponse(String response);
+        void OnResponse(String response,int status);
         void OnFailure(String response);
     }
 
@@ -40,6 +43,15 @@ public class Chatgpt {
             build();
 
     private final Moshi moshi = new Moshi.Builder().build();
+
+    private static class Delta{
+        public Delta(String role, String content){
+            this.role = role;
+            this.content = content;
+        }
+        private final String role;
+        private final String content;
+    }
 
     private static class ChatMessage{
         public  ChatMessage(String role, String content){
@@ -53,7 +65,8 @@ public class Chatgpt {
 
     private static class CompletionRequest {
         private final String model = "gpt-3.5-turbo";
-        private final boolean stream = false;
+        //采用流模式，响应更快
+        private final boolean stream = true;
         private ChatMessage[] messages;
         public void setMessages(ChatMessage[] messages) {
             this.messages = messages;
@@ -73,6 +86,7 @@ public class Chatgpt {
     private static class Choice {
         private int index;
         private ChatMessage message;
+        private Delta delta;
         private String finish_reason;
     }
 
@@ -110,9 +124,25 @@ public class Chatgpt {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    String responseBody = response.body().string();
-                    CompletionResponse resp= moshi.adapter(CompletionResponse.class).fromJson(responseBody);
-                    onResponseListener.OnResponse(resp.choices[0].message.content);// 解析响应数据并处理 ChatGPT 的回复
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(response.body().byteStream()));
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null ) {
+                        if (TextUtils.isEmpty((line)))
+                            continue;
+                        line = line.replaceFirst("data: ", "");
+                        //结束处理
+                        if ("[DONE]".equals(line))
+                            break;
+                        CompletionResponse resp= moshi.adapter(CompletionResponse.class).fromJson(line);
+                        //0 start,1 continus, 2 stop
+                        int status = 1;
+                        if ("stop".equals(resp.choices[0].finish_reason))
+                            status = 2;
+                        else  if (!TextUtils.isEmpty(resp.choices[0].delta.role))
+                            status = 0;
+                        onResponseListener.OnResponse(resp.choices[0].delta.content,status);// 解析响应数据并处理 ChatGPT 的回复
+                    }
+                    bufferedReader.close();
                 } else {
                     // 处理错误情况
                     onResponseListener.OnFailure("Failure code :"+ response.code());
