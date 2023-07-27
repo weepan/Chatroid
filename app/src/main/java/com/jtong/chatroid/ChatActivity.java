@@ -86,6 +86,11 @@ public class ChatActivity extends AppCompatActivity {
 
 
             }
+
+            @Override
+            public void OnFailure(String response) {
+                Toast.makeText(ChatActivity.this,response,Toast.LENGTH_LONG).show();
+            }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(messageAdapter);

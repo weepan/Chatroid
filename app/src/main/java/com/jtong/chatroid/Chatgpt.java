@@ -29,13 +29,14 @@ public class Chatgpt {
 
     public interface OnResponseListener {
         void OnResponse(String response);
+        void OnFailure(String response);
     }
 
     private final OkHttpClient okHttpClient = new OkHttpClient.Builder().
-            connectTimeout(1, TimeUnit.SECONDS).
-            writeTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS).
-            callTimeout(69, TimeUnit.SECONDS).
+            connectTimeout(2, TimeUnit.SECONDS).
+            writeTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS).
+            callTimeout(120, TimeUnit.SECONDS).
             build();
 
     private final Moshi moshi = new Moshi.Builder().build();
@@ -114,6 +115,7 @@ public class Chatgpt {
                     onResponseListener.OnResponse(resp.choices[0].message.content);// 解析响应数据并处理 ChatGPT 的回复
                 } else {
                     // 处理错误情况
+                    onResponseListener.OnFailure("Failure code :"+ response.code());
                 }
             }
 
@@ -121,6 +123,7 @@ public class Chatgpt {
             public void onFailure(Call call, IOException e) {
                 // 处理网络请求失败
                 Log.e("Chatgpt",e.toString());
+                onResponseListener.OnFailure(e.toString());
             }
         });
 
